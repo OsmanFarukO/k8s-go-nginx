@@ -1,5 +1,6 @@
 stages:
   - dep
+  - test
   - build
 
 dep:
@@ -7,6 +8,17 @@ dep:
   image: golang:1.9
   script:
     - GOOS=linux GOARCH=386 go build -o ./app/main ./app/main.go
+  artifacts:
+    paths:
+      - ./app/main
+
+test:
+  stage: test
+  dependencies:
+    - dep
+  image: golang:1.9
+  script:
+    - go test ./app
 
 build:
   stage: build
@@ -15,7 +27,9 @@ build:
     - docker:dind
   dependencies:
     - dep
+    - test
   script:
+    - ls
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build -t $CI_REGISTRY/osmanfaruko/turkai-ex/goapp:latest ./app
     - docker tag $CI_REGISTRY/osmanfaruko/turkai-ex/goapp:latest $CI_REGISTRY/osmanfaruko/turkai-ex/goapp:$CI_COMMIT_SHORT_SHA
