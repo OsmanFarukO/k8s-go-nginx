@@ -18,7 +18,7 @@ test:
     - dep
   image: golang:1.9
   script:
-    - go test ./app
+    - go test ./app -v
 
 build:
   stage: build
