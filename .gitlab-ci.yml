@@ -10,7 +10,9 @@ dep:
 
 build:
   stage: build
-  image: docker:17
+  image: docker:stable
+  services:
+    - docker:dind
   dependencies:
     - dep
   script:
