@@ -3,12 +3,16 @@ stages:
   - build
 
 dep:
+  stage: dep
   image: golang:1.9
   script:
     - GOOS=linux GOARCH=386 go build ./app/main.go 
 
 build:
+  stage: build
   image: docker:17
+  dependencies:
+    - dep
   script:
     - docker build -t registry.gitlab.com/osmanfaruko/turkai-ex/goapp:latest ./app
     - docker push registry.gitlab.com/osmanfaruko/turkai-ex/goapp:latest
