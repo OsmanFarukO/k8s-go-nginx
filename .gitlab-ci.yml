@@ -6,7 +6,7 @@ dep:
   stage: dep
   image: golang:1.9
   script:
-    - go build /home/osman/projects/turkai/app/main.go 
+    - GOOS=linux GOARCH=386 go build ./app/main.go -o ./app/main
 
 build:
   stage: build
