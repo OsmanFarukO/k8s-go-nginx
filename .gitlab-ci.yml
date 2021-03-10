@@ -6,7 +6,7 @@ dep:
   stage: dep
   image: golang:1.9
   script:
-    - GOOS=linux GOARCH=386 go build ./app/main.go -o ./app/main
+    - GOOS=linux GOARCH=386 go build -o ./app/main ./app/main.go
 
 build:
   stage: build
