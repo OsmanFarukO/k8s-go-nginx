@@ -17,6 +17,11 @@ build:
     - dep
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker build -t registry.gitlab.com/osmanfaruko/turkai-ex/goapp:latest ./app
-    - docker push registry.gitlab.com/osmanfaruko/turkai-ex/goapp:latest
-
+    - docker build -t $CI_REGISTRY/osmanfaruko/turkai-ex/goapp:latest ./app
+    - docker tag $CI_REGISTRY/osmanfaruko/turkai-ex/goapp:latest $CI_REGISTRY/osmanfaruko/turkai-ex/goapp:$CI_COMMIT_SHORT_SHA
+    - docker push $CI_REGISTRY/osmanfaruko/turkai-ex/goapp:latest
+    - docker push $CI_REGISTRY/osmanfaruko/turkai-ex/goapp:$CI_COMMIT_SHORT_SHA
+    - docker build -t $CI_REGISTRY/osmanfaruko/turkai-ex/nginx:latest ./nginx
+    - docker tag $CI_REGISTRY/osmanfaruko/turkai-ex/nginx:latest $CI_REGISTRY/osmanfaruko/turkai-ex/nginx:$CI_COMMIT_SHORT_SHA
+    - docker push $CI_REGISTRY/osmanfaruko/turkai-ex/nginx:latest
+    - docker push $CI_REGISTRY/osmanfaruko/turkai-ex/nginx:$CI_COMMIT_SHORT_SHA

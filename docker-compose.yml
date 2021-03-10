@@ -2,12 +2,14 @@ version: '3'
 
 services:
   goapp:
+    image: registry.gitlab.com/osmanfaruko/turkai-ex/goapp:latest
     build: ./app
     networks:
       env-network:
 
   nginx:
-    image: nginx
+    image: registry.gitlab.com/osmanfaruko/turkai-ex/nginx:latest
+    build: ./nginx
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
     command: [nginx-debug, '-g', 'daemon off;']
