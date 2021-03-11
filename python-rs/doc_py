@@ -1,0 +1,13 @@
+
+# for create virtualenv
+virtualenv -p python3 turkai.env
+
+# use virtualenv
+source turkai.env/bin/activate
+
+# install requirements
+pip install requirements.txt
+
+# for get cluster using pod list with ip
+python k8s_pods.py
+

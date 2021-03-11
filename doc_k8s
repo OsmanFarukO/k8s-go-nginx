@@ -10,3 +10,15 @@ kubectl create secret generic regcred \
 # apply ymls
 kubectl apply -f k8s/go-env.yml
 kubectl apply -f k8s/nginx-env.yml
+
+# apply autoscaler
+kubectl apply -f k8s/nginx-as.yml
+
+# for test environment forward local port to cluster nginx-lb service
+kubectl port-forward service/nginx-lb 8080:80
+
+# after then testing
+curl http://localhost:8080/DENEME
+
+# command will output
+Hello Turkai from DENEME

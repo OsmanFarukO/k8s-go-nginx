@@ -1,0 +1,9 @@
+
+# for build images
+docker-compose build
+
+# then up it :)
+docker-compose up -d
+
+# and olaa
+curl http://localhost/DENEME
