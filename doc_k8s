@@ -1,10 +1,10 @@
 
 # minikube start with nginx volume mount 
-minikube start --mount --mount-string="/home/osman/projects/turkai/k8s/nginx:/turkai/nginx"
+minikube start --mount --mount-string="<$PWD>/k8s/nginx:/turkai/nginx"
 
 # kubectl create secret for get docker images
 kubectl create secret generic regcred \
-	--from-file=.dockerconfigjson=/home/osman/.docker/config.json \
+	--from-file=.dockerconfigjson=/home/<user>/.docker/config.json \
 	--type=kubernetes.io/dockerconfigjson
 
 # apply ymls
