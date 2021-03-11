@@ -1,0 +1,52 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: nginx
+spec:
+  selector:
+    matchLabels:
+      app: app
+      tier: nginx
+      track: stable
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: app
+        tier: nginx
+        track: stable
+    spec:
+      containers:
+        - name: nginx
+          image: registry.gitlab.com/osmanfaruko/turkai-ex/nginx:latest
+          volumeMounts:
+            - mountPath: /etc/nginx/conf.d/default.conf
+              name: nginx-vol0
+              readOnly: true
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/usr/sbin/nginx","-s","quit"]
+      imagePullSecrets:
+        - name: regcred
+      volumes:
+        - hostPath:
+            path: /turkai/nginx/default.conf
+            type: File
+          name: nginx-vol0
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  selector:
+    app: app
+    tier: nginx
+  ports:
+  - protocol: "TCP"
+    port: 80
+    targetPort: 80
+  type: LoadBalancer

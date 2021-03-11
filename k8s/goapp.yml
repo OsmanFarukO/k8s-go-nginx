@@ -1,0 +1,39 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: app
+  labels:
+    app: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+      - name: app
+        image: registry.gitlab.com/osmanfaruko/turkai-ex/goapp:latest
+        command: ["/bin/sh", "-c", "/home/main"]
+        ports:
+          - containerPort: 11130
+      imagePullSecrets:
+        - name: regcred
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: app
+spec:
+  selector:
+    app: app
+    tier: app
+  type: NodePort
+  ports:
+    - port: 11130
+      targetPort: 11130
