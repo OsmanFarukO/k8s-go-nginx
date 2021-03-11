@@ -1,19 +1,20 @@
-kind: Deployment
+---
 apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: nginx
+  name: nginx-lb
 spec:
   selector:
     matchLabels:
-      app: app
-      tier: nginx
+      app: go-app
+      tier: nginx-lb
       track: stable
   replicas: 1
   template:
     metadata:
       labels:
-        app: app
-        tier: nginx
+        app: go-app
+        tier: nginx-lb
         track: stable
     spec:
       containers:
@@ -36,15 +37,14 @@ spec:
           name: nginx-vol0
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx
+  name: nginx-lb
 spec:
   selector:
-    app: app
-    tier: nginx
+    app: go-app
+    tier: nginx-lb
   ports:
   - protocol: "TCP"
     port: 80

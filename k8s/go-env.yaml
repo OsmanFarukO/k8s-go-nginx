@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  selector:
+    matchLabels:
+      app: go-app
+      tier: backend
+      track: stable
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: go-app
+        tier: backend
+        track: stable
+    spec:
+      containers:
+        - name: go-app
+          image: registry.gitlab.com/osmanfaruko/turkai-ex/goapp:latest
+          ports:
+            - name: http
+              containerPort: 11130
+      imagePullSecrets:
+        - name: regcred
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-app
+spec:
+  selector:
+    app: go-app
+    tier: backend
+  ports:
+  - protocol: TCP
+    port: 11130
+    targetPort: http

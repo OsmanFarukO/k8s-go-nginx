@@ -1,12 +1,12 @@
 
-
 # minikube start with nginx volume mount 
-minikube start --mount --mount-string="/home/osman/projects/turkai/nginx:/turkai/nginx"
+minikube start --mount --mount-string="/home/osman/projects/turkai/k8s/nginx:/turkai/nginx"
 
 # kubectl create secret for get docker images
 kubectl create secret generic regcred \
 	--from-file=.dockerconfigjson=/home/osman/.docker/config.json \
 	--type=kubernetes.io/dockerconfigjson
 
-helm install nginx-ingress stable/nginx-ingress --set rbac.create=true --set controller.publishService.enabled=true
-
+# apply ymls
+kubectl apply -f k8s/go-env.yml
+kubectl apply -f k8s/nginx-env.yml
