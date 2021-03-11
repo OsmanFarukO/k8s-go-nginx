@@ -74,8 +74,8 @@ With this command we started kubernetes cluster with mountpoint for to use nginx
 ```yaml
 
 spec:
-	containers:
-		volumeMounts:
+    containers:
+        volumeMounts:
             - mountPath: /etc/nginx/conf.d/default.conf
               name: nginx-vol0
               readOnly: true
@@ -117,8 +117,8 @@ kubectl create secret generic regcred \
 We will use this secret in k8s/nginx-env.yaml and k8s/go-env.yaml file.
 
 ```yaml
-	imagePullSecrets:
-    	- name: regcred
+    imagePullSecrets:
+        - name: regcred
 ```
 
 After this we can apply our deployments and services in this cluster.
