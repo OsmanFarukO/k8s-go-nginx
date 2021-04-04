@@ -32,7 +32,7 @@ spec:
         - name: regcred
       volumes:
         - hostPath:
-            path: /turkai/nginx/default.conf
+            path: /nginx/default.conf
             type: File
           name: nginx-vol0
 
