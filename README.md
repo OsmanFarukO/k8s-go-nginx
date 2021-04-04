@@ -1,4 +1,4 @@
-# Hello turkai from @name
+# Hello from @name
 
 Simpe hello webapp writen with golang and using nginx as a load balancer.
 
@@ -30,9 +30,9 @@ When the job success we updated goapp:latest and nginx:latest images in registry
 
 Example result when build stage done:
 ```bash
-registry.gitlab.com/osmanfaruko/turkai-ex/goapp:latest   (updated)
-registry.gitlab.com/osmanfaruko/turkai-ex/goapp:47cc5826 (added)
-registry.gitlab.com/osmanfaruko/turkai-ex/goapp:a16d68d0 (previous image)
+registry.gitlab.com/osmanfaruko/k8s-go-nginx/goapp:latest   (updated)
+registry.gitlab.com/osmanfaruko/k8s-go-nginx/goapp:47cc5826 (added)
+registry.gitlab.com/osmanfaruko/k8s-go-nginx/goapp:a16d68d0 (previous image)
 ```
 
 ## Docker-Compose explaine
@@ -55,7 +55,7 @@ curl http://localhost/example-osman
 this command. When the command execute nginx will proxy this request to mainapp in internal network. And the result is:
 
 ```bash
-Hello Turkai from example-osman
+Hello from example-osman
 ```
 You can see more details in doc_docker file.
 
@@ -66,7 +66,7 @@ Kubernetes environment designed for deploy (go-app , nginx-lb) services in clust
 Before we run cluster first create it with using minikube:
 
 ```bash
-minikube start --mount --mount-string="./k8s/nginx:/turkai/nginx"
+minikube start --mount --mount-string="./k8s/nginx:/nginx"
 ```
 
 With this command we started kubernetes cluster with mountpoint for to use nginx/default.conf in node. We will use defined mountpoint in k8s/nginx-env.yaml file.
@@ -84,7 +84,7 @@ spec:
     .
     volumes:
         - hostPath:
-            path: /turkai/nginx/default.conf
+            path: /nginx/default.conf
             type: File
           name: nginx-vol0
 ```
@@ -139,8 +139,8 @@ Events:
   Type    Reason          Age                 From               Message
   ----    ------          ----                ----               -------
   Normal  SandboxChanged  16m (x3 over 16m)   kubelet, minikube  Pod sandbox changed, it will be killed and re-created.
-  Normal  Pulling         16m (x2 over 131m)  kubelet, minikube  Pulling image "registry.gitlab.com/osmanfaruko/turkai-ex/goapp:latest"
-  Normal  Pulled          15m (x2 over 131m)  kubelet, minikube  Successfully pulled image "registry.gitlab.com/osmanfaruko/turkai-ex/goapp:latest"
+  Normal  Pulling         16m (x2 over 131m)  kubelet, minikube  Pulling image "registry.gitlab.com/osmanfaruko/k8s-go-nginx/goapp:latest"
+  Normal  Pulled          15m (x2 over 131m)  kubelet, minikube  Successfully pulled image "registry.gitlab.com/osmanfaruko/k8s-go-nginx/goapp:latest"
   Normal  Created         15m (x2 over 131m)  kubelet, minikube  Created container go-app
   Normal  Started         15m (x2 over 131m)  kubelet, minikube  Started container go-app
 ```
@@ -201,7 +201,7 @@ curl http://localhost:8080/example-osman
 Output:
 
 ```bash
-Hello Turkai from example-osman
+Hello from example-osman
 ```
 
 Our app running very well as you can see. Now lets auto-scale nginx-lb with using k8s/nginx-as.yml file.
@@ -286,9 +286,9 @@ Allocated resources:
 And for execute python 
 
 ```bash
-virtualenv -p python3 turkai.env
+virtualenv -p python3 k8s-go-nginx.env
 
-source turkai.env/bin/activate
+source k8s-go-nginx.env/bin/activate
 
 pip install requirements.txt
 
